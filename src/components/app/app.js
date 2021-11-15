@@ -31,7 +31,7 @@ export default class App extends Component {
   render() {
     const {randomItemShowed} = this.state;
 
-    const randomChar = randomItemShowed ? <RandomChar/> : null;
+    const randomChar = randomItemShowed ? <RandomChar /> : null;
 
     if (this.state.startError) {
       return <AppAlert></AppAlert>
@@ -55,19 +55,6 @@ export default class App extends Component {
                   onClick={this.updateShowingRandomChar}>{randomChar ? 'Скрыть' : 'Показать случайного персонажа'}</Button>
               </Col>
             </Row>
-
-              {/*<Route path="/" element={<h1 className="text-white"> Welcome to GOT DM</h1>}>*/}
-              {/*  <Route path="characters" index element={<CharacterPage />}/>*/}
-              {/*  <Route path="houses" element={<HousesPage />}/>*/}
-              {/*  <Route path="books" element={<BooksPage />}>*/}
-              {/*    <Route path=":id" render={*/}
-              {/*      ({match}) => {*/}
-              {/*        const {id} = match.params;*/}
-              {/*        return <BooksItem bookId={id}/>*/}
-              {/*      }*/}
-              {/*    }/>*/}
-              {/*  </Route>*/}
-              {/*</Route>*/}
               <Route path="/" render={() => <h1 className="text-white"> Welcome to GOT DM</h1>}/>
               <Route path="/books" component={BooksPage}/>
               <Route path="/characters"  component={CharacterPage}/>
