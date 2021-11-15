@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import styled from "styled-components";
-import GotService from '../../services/gotService'
 import Spinner from "../spinner";
 
 const ItemListUl = styled.ul`
@@ -11,43 +10,47 @@ const ItemListUl = styled.ul`
 
 export default class ItemList extends Component {
 
-  gotService = new GotService();
-
   state = {
-    charList: null
+    itemList: null
   }
 
   componentDidMount() {
-    this.gotService.getAllCharacters()
-      .then(charList => {
+    const {getData} = this.props;
+
+    getData()
+      .then(itemList => {
         this.setState({
-          charList
+          itemList
         })
       })
   }
 
   renderItems(arr) {
     return arr.map((item, i) => {
+
+      const {name} = item;
+      const label = this.props.renderItem(item);
+
       return (
         <li
           className="list-group-item"
-          key={41 + i}
-          onClick={() => this.props.onCharSelected(i)}
+          key={name + i}
+          onClick={() => this.props.onItemSelected(i)}
         >
-          {item.name}
+          {label}
         </li>
       )
     })
   }
 
   render() {
-    const {charList} = this.state;
+    const {itemList} = this.state;
 
-    if (!charList) {
+    if (!itemList) {
       return <Spinner/>
     }
 
-    const items = this.renderItems(charList);
+    const items = this.renderItems(itemList);
 
     return (
       <ItemListUl className="list-group">
