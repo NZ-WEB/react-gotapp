@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import styled from "styled-components";
 import Spinner from "../spinner";
 import PropTypes from 'prop-types';
+import GotService from '../../services/gotService';
+import WithData from "../withData/withData";
 
 const ItemListUl = styled.ul`
   .list-group-item {
@@ -9,22 +11,7 @@ const ItemListUl = styled.ul`
   }
 `;
 
-export default class ItemList extends Component {
-
-  state = {
-    itemList: null
-  }
-
-  componentDidMount() {
-    const {getData} = this.props;
-
-    getData()
-      .then(itemList => {
-        this.setState({
-          itemList
-        })
-      })
-  }
+class ItemList extends Component {
 
   renderItems(arr) {
     return arr.map((item, i) => {
@@ -45,13 +32,8 @@ export default class ItemList extends Component {
   }
 
   render() {
-    const {itemList} = this.state;
-
-    if (!itemList) {
-      return <Spinner/>
-    }
-
-    const items = this.renderItems(itemList);
+    const {data} = this.props;
+    const items = this.renderItems(data);
 
     return (
       <ItemListUl className="list-group">
@@ -68,3 +50,7 @@ ItemList.defaultProps = {
 ItemList.propTypes = {
   onItemSelected: PropTypes.func
 }
+
+
+const {getAllCharacters} = new GotService();
+export default WithData(ItemList, getAllCharacters);
